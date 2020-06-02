@@ -2,11 +2,16 @@ import csv
 import os
 
 
+#get relative file path
+
 csv_path = os.path.join("Resources", "budget_data.csv")
+
+#initialize two list to pick up the data in each column 
 
 month = []
 profit = []
 
+# open csv file, read the data and store in variable and list
 
 with open (csv_path, "r", newline="") as csv_file:
     csv_reader = csv.reader(csv_file, delimiter= ",")
@@ -18,7 +23,11 @@ with open (csv_path, "r", newline="") as csv_file:
         month.append (line[0])
         profit.append (float(line[1]))
 
+
+
 num_months = len(month)
+
+# initialize empty list and run for loop to populate list with month over month change in profit 
 
 m_over_m_change = []
 
@@ -26,9 +35,10 @@ for i in range(1, num_months):
     m_over_m_change.append (profit[i]- profit[i-1])
 
 
+
 total_profit = sum(profit)
 
-averge_chg_profit = sum(m_over_m_change)/len(m_over_m_change)
+averge_chg_profit = round (sum(m_over_m_change)/len(m_over_m_change),2)
 
 max_change = max(m_over_m_change)
 
@@ -38,14 +48,19 @@ min_change = min(m_over_m_change)
 
 min_change_month = month[m_over_m_change.index(min_change)+1]
 
-print(total_profit)
-print(averge_chg_profit)
-print(max_change)
-print(min_change)
-print(max_change_month)
-print (min_change_month)
-print(headers)
 
+# print the results
+
+print("Financial Analysis")
+print("Total Months: " + str(num_months))
+print("Total Profit: " + str(total_profit))
+print("Average change: " + str(averge_chg_profit))
+print("Greatest Increase: " + str(max_change_month) + " " + str(max_change))
+print("Greatest Decrease: " + str(min_change_month) + " " + str(min_change))
+
+
+
+# create text output file to store the resluts of the analysis 
 
 output_path = os.path.join("Analysis", "results.txt")
 
